@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Steam pro beu amor</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  background-color: #1b2838;
+  color: #c7d5e0;
+}
+
+/* ======================
+   TOP BAR
+====================== */
+.top-bar {
+  background-color: #171a21;
+}
+
+.top-bar-inner {
+  max-width: 1323px;
+  margin: 0 auto;
+  padding: 12px 40px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 18px;
+  margin-right: 40px;
+}
+
+.top-bar nav {
+  display: flex;
+  gap: 25px;
+}
+
+.top-bar nav a {
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* PERFIL DIREITA */
+.user-area {
+  position: absolute;
+  right: 40px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+}
+
+.user-area img {
+  width: 32px;
+  height: 32px;
+  border-radius: 3px;
+}
+
+/* ======================
+   STORE BAR
+====================== */
+.store-bar {
+  background: linear-gradient(90deg,#2a475e,#1b2838);
+}
+
+.store-bar-inner {
+  max-width: 1323px;
+  margin: 0 auto;
+  padding: 10px 40px;
+}
+
+.store-bar input {
+  width: 320px;
+  padding: 7px;
+  background-color: #316282;
+  border: none;
+  color: white;
+}
+
+/* ======================
+   PAGE
+====================== */
+.page {
+  padding: 35px 40px;
+  max-width: 1323px;
+  margin: 0 auto;
+}
+
+.game-title {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.game-area {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+/* ======================
+   MÍDIA
+====================== */
+.media {
+  width: 930px;
+}
+
+.main-image {
+  width: 930px;
+  height: 571px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.thumbnails {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.thumbnails img {
+  width: 120px;
+  height: 70px;
+  object-fit: cover;
+  cursor: pointer;
+  border: 1px solid #000;
+}
+
+/* ======================
+   INFO LATERAL
+====================== */
+.info {
+  width: 373px;
+  height: 571px;
+  background-color: #16202d;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.capsule {
+  width: 100%;
+  height: 210px;
+  object-fit: cover;
+  margin-bottom: 12px;
+}
+
+.wishlist,
+.download {
+  width: 100%;
+  margin-top: 12px;
+  padding: 10px;
+  border: none;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.wishlist {
+  background: linear-gradient(90deg,#6fa720,#588a1b);
+}
+
+.download {
+  background: linear-gradient(90deg,#4c6b22,#3e5522);
+}
+
+.details {
+  margin-top: 12px;
+  font-size: 13px;
+}
+
+/* ======================
+   SEÇÕES
+====================== */
+.section {
+  margin-top: 40px;
+}
+
+.section h2 {
+  margin-bottom: 15px;
+  font-size: 20px;
+}
+
+.review {
+  background-color: #16202d;
+  padding: 12px;
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.review img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.requirements {
+  background-color: #16202d;
+  padding: 20px;
+  font-size: 14px;
+}
+
+.req-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+.req-grid h3 {
+  margin-bottom: 10px;
+}
+
+/* ======================
+   EASTER EGG — NIGHTMARE MARIONETTE
+====================== */
+#marionette-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background-color: black;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+#marionette-overlay.visible {
+  display: flex;
+  animation: fadeInOverlay 0.6s ease forwards;
+}
+
+@keyframes fadeInOverlay {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+#marionette-img {
+  max-width: 80vw;
+  max-height: 75vh;
+  object-fit: contain;
+  animation: marionettePop 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes marionettePop {
+  from { transform: scale(0.6); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+#marionette-hint {
+  margin-top: 16px;
+  color: #555;
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+
+/* barra de progresso discreta no topo */
+#danger-bar-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  z-index: 9998;
+  pointer-events: none;
+}
+
+#danger-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #ff0040, #ff6600);
+  transition: width 0.1s linear;
+}
+</style>
+</head>
+
+<body>
+
+<header class="top-bar">
+  <div class="top-bar-inner">
+    <div class="logo">STEAM</div>
+
+    <nav>
+      <a>LOJA</a>
+      <a>COMUNIDADE</a>
+      <a>VOLRATH</a>
+      <a>CONVERSA</a>
+      <a>SUPORTE</a>
+    </nav>
+
+    <div class="user-area">
+      <span>🔔</span>
+      <span>Volrath</span>
+      <span>R$ 100000000000000,00</span>
+      <img src="img/steamvol.jpg">
+    </div>
+  </div>
+</header>
+
+<div class="store-bar">
+  <div class="store-bar-inner">
+    <input type="text" placeholder="Buscar na loja">
+  </div>
+</div>
+
+<main class="page">
+
+  <h1 class="game-title" id="gameTitle"></h1>
+
+  <section class="game-area">
+
+    <div class="media">
+      <img id="mainImage" class="main-image">
+      <div class="thumbnails">
+        <img onclick="changeImage(0)">
+        <img onclick="changeImage(1)">
+        <img onclick="changeImage(2)">
+      </div>
+    </div>
+
+    <aside class="info">
+      <img id="capsule" class="capsule">
+      <p id="description"></p>
+
+      <div>
+        <button class="download">Baixar jogo!</button>
+        <button class="wishlist">Adicionar à Lista de Desejos ❤️</button>
+
+        <div class="details"><strong>DATA DE LANÇAMENTO:</strong> <span id="release"></span></div>
+        <div class="details"><strong>DESENVOLVEDORA:</strong> <span id="developer"></span></div>
+      </div>
+    </aside>
+
+  </section>
+
+  <section class="section">
+    <h2>Requisitos de Sistema</h2>
+    <div class="requirements">
+      <div class="req-grid">
+        <div>
+          <h3>MÍNIMOS</h3>
+          <p id="reqMin"></p>
+        </div>
+        <div>
+          <h3>RECOMENDADOS</h3>
+          <p id="reqRec"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Análises dos Usuários</h2>
+
+    <div class="review">
+      <img id="avatar1">
+      <div>
+        <strong id="reviewUser1"></strong>
+        <p id="reviewText1"></p>
+      </div>
+    </div>
+
+    <div class="review">
+      <img id="avatar2">
+      <div>
+        <strong id="reviewUser2"></strong>
+        <p id="reviewText2"></p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ========================
+     EASTER EGG — NIGHTMARE MARIONETTE
+======================== -->
+<div id="marionette-overlay">
+  <img id="marionette-img" src="img/Nightmarionette_scare.webp" alt="Nightmare Marionette">
+  <!-- ÁUDIO: coloque seu arquivo em audio/marionette.mp3 (ou troque o src abaixo) -->
+  <audio id="marionette-audio" src="img/nmaudio.ogg" preload="auto"></audio>
+  <p id="marionette-hint">clique para fechar</p>
+</div>
+
+<!-- barra de perigo sutil no topo -->
+<div id="danger-bar-wrap">
+  <div id="danger-bar"></div>
+</div>
+
+<script>
+/* =====================================================
+   DADOS DO JOGO
+===================================================== */
+const data = {
+  title: "Red + Volrath <3",
+  description: "Valorant é um jogo de FPS, e também o lugar onde conheci o amor da minha vida. O destino fez com que eu quisesse entrar em um time de Valorant, e ainda bem que eu fiz isso. Te conhecer foi a melhor coisa que poderia ter me acontecido. Você era meu sonho, e eu nem sabia.",
+  release: "Desde que te conheci",
+  developer: "Redzinhalol",
+  images: [
+    "img/duoval.png",
+    "img/image2.png",
+    "img/image7.png"
+  ],
+  capsule: "img/image6.png",
+  reviews: [
+    {
+      user: "Redzinhalol",
+      text: "Review  100% sincero: eu amo você, eu amo a sua voz, eu amo sua risada, eu amo passar meu tempo com você, amo dormir com você, amo jogar com você, amo te ouvir falando das coisas que você gosta, amo ver você jogando os jogos que você gosta (sim eu amo a porra do jogo do vizinho kkkkkk e obviamente fnaf também), amo ver anime com você (agora eu também acho o sung jin woo super aurudo ok), amo o som forte do seu R kkkkkk, amo quando diz que sou sua garota, amo quando diz que me ama, amo ver você, amo quando você fala que ta com saudade, amo quando você fala comigo igual um neném, amo muitas coisas kkkkkk difícil é ter algo que eu não ame em você",
+      avatar: "img/steamred.jpg"
+    },
+    {
+      user: "Redvlr",
+      text: "meu duo da vida <3 quero casar com você, morar com você e acordar do seu lado todos os dias, além de ter uma família buito linda com nenens doguinhos e gatinhus beu amo",
+      avatar: "img/steamred.jpg"
+    }
+  ],
+  requirements: {
+    min: `
+      SO: Continuar me amando pra sempre (só se quise) <br>
+      Processador: Buita calma pq sou muuuuito chata (se der ok) <br>
+      Memória: Me mandar muitas mensagens, aúdios e fotos (se nao preferir mandar pra outra ne) <br>
+      Armazenamento: Muitao
+    `,
+    rec: `
+      SO: Eu i Você pra sempre (!!!)<br>
+      Processador: Amor, carinho e paciência<br>
+      Memória: Tudo que vamos viver juntos ainda (ebaaa)<br>
+      Armazenamento: Infinito
+    `
+  }
+};
+
+document.getElementById("gameTitle").innerText = data.title;
+document.getElementById("description").innerText = data.description;
+document.getElementById("release").innerText = data.release;
+document.getElementById("developer").innerText = data.developer;
+
+document.getElementById("mainImage").src = data.images[0];
+document.querySelectorAll(".thumbnails img").forEach((img, i) => {
+  img.src = data.images[i];
+});
+
+document.getElementById("capsule").src = data.capsule;
+
+document.getElementById("reviewUser1").innerText = data.reviews[0].user;
+document.getElementById("reviewText1").innerText = data.reviews[0].text;
+document.getElementById("avatar1").src = data.reviews[0].avatar;
+
+document.getElementById("reviewUser2").innerText = data.reviews[1].user;
+document.getElementById("reviewText2").innerText = data.reviews[1].text;
+document.getElementById("avatar2").src = data.reviews[1].avatar;
+
+document.getElementById("reqMin").innerHTML = data.requirements.min;
+document.getElementById("reqRec").innerHTML = data.requirements.rec;
+
+function changeImage(index) {
+  document.getElementById("mainImage").src = data.images[index];
+}
+
+/* =====================================================
+   BOTÃO BAIXAR JOGO — abre vídeo em nova aba
+   ↓↓↓ TROQUE A URL ABAIXO PELO SEU VÍDEO ↓↓↓
+===================================================== */
+const VIDEO_URL = "https://www.youtube.com/watch?v=94QB72USlEM";
+
+document.querySelector(".download").onclick = () => {
+  window.open(VIDEO_URL, "_blank");
+};
+
+/* =====================================================
+   EASTER EGG — NIGHTMARE MARIONETTE
+===================================================== */
+(function () {
+  const DANGER_ZONE_START = 0.35;
+  const DANGER_ZONE_END   = 0.65;
+  const TRIGGER_DELAY_MS  = 2500;
+
+  let triggered   = false;
+  let inDanger    = false;
+  let dangerTimer = null;
+  let dangerStart = null;
+
+  const overlay = document.getElementById("marionette-overlay");
+  const bar     = document.getElementById("danger-bar");
+  const audio   = document.getElementById("marionette-audio");
+
+  /* fecha o overlay ao clicar e para o áudio */
+  overlay.addEventListener("click", () => {
+    overlay.classList.remove("visible");
+    audio.pause();
+    audio.currentTime = 0;
+  });
+
+  document.addEventListener("mousemove", (e) => {
+    if (triggered) return;
+
+    const ratio    = e.clientX / window.innerWidth;
+    const inCenter = ratio >= DANGER_ZONE_START && ratio <= DANGER_ZONE_END;
+
+    if (inCenter) {
+      if (!inDanger) {
+        inDanger    = true;
+        dangerStart = Date.now();
+
+        dangerTimer = setTimeout(() => {
+          if (triggered) return;
+          triggered = true;
+          overlay.classList.add("visible");
+          bar.style.width = "0%";
+          /* toca o áudio assim que o overlay aparece */
+          audio.currentTime = 0;
+          audio.play();
+        }, TRIGGER_DELAY_MS);
+      }
+
+      const elapsed  = Date.now() - dangerStart;
+      const progress = Math.min((elapsed / TRIGGER_DELAY_MS) * 100, 100);
+      bar.style.width = progress + "%";
+
+    } else {
+      if (inDanger) {
+        inDanger = false;
+        clearTimeout(dangerTimer);
+        dangerStart = null;
+        bar.style.width = "0%";
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
